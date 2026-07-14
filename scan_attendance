@@ -1,0 +1,49 @@
+import cv2
+import csv
+import os
+from datetime import datetime
+
+def read_qr_code():
+    cap = cv2.VideoCapture(0)
+    detector = cv2.QRCodeDetector()
+
+    scanned_students = set()  # 🔒 To store already scanned names
+
+    while True:
+        _, img = cap.read()
+        data, bbox, _ = detector.detectAndDecode(img)
+        
+        if data:
+            student_name, class_name = data.split("|")
+            
+            if student_name not in scanned_students:
+                now = datetime.now()
+                date_str = now.strftime("%Y-%m-%d")
+                time_str = now.strftime("%H:%M:%S")
+                
+                folder = "attendance_records"
+                os.makedirs(folder, exist_ok=True)
+
+                filename = f"{folder}/{class_name}_{date_str}.csv"
+                file_exists = os.path.isfile(filename)
+
+                with open(filename, "a", newline="") as f:
+                    writer = csv.writer(f)
+                    if not file_exists:
+                        writer.writerow(["Student Name", "Date", "Time"])
+                    writer.writerow([student_name, date_str, time_str])
+                
+                scanned_students.add(student_name)
+                print(f"✅ {student_name} marked present at {time_str}")
+            else:
+                print(f"⚠️ {student_name} already scanned.")
+
+        cv2.imshow("QR Scanner - Press Q to quit", img)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    read_qr_code()
