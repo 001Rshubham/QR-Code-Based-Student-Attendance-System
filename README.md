@@ -345,9 +345,9 @@ git push origin feature-name
 
 🎓 B.Tech – Artificial Intelligence & Data Science
 
-- 💼 LinkedIn: https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME
+- 💼 LinkedIn: https://www.linkedin.com/in/001rshubham/
 - 🐙 GitHub: https://github.com/001Rshubham
-- 📧 Email: your-email@example.com
+- 📧 Email:  landgeshubham438@gmail.com
 
 > Replace the LinkedIn and Email placeholders with your actual details.
 
